@@ -15,8 +15,6 @@ export const QUEUE_TYPES = {
     gpuOrdinaryFast: "GOF",
     gpu4OrdinaryFast: "G4OF",
     gpu8OrdinaryFast: "G8OF",
-    gpuPOrdinaryFast: "GPOF",
-    gpuP2OrdinaryFast: "GP2OF",
     gpuP4OrdinaryFast: "GP4OF",
     gpuSavingFast: "GSF",
     gpu4SavingFast: "G4SF",
@@ -26,9 +24,9 @@ export const QUEUE_TYPES = {
     gpuP4SavingFast: "GP4SF",
 } as const;
 
-// Note: has more keys than esse's `job/compute.json#properties/queue` union (GPOF/GP2OF/GP4OF/
-// GPSF/GP2SF/GP4SF are not in the schema), so this stays a plain string index rather than typed
-// against that union.
+// Note: has more keys than esse's `job/compute.json#properties/queue` union (GP4OF/GPSF/GP2SF/
+// GP4SF are not in the schema), so this stays a plain string index rather than typed against
+// that union.
 export const QUEUE_DISPLAY: Record<string, string> = {
     D: "debug (D)",
     OR: "ordinary regular (OR)",
@@ -48,8 +46,6 @@ export const QUEUE_DISPLAY: Record<string, string> = {
     GOF: "1 GPU ordinary fast (GOF)",
     G4OF: "4 GPUs ordinary fast (G4OF)",
     G8OF: "8 GPUs ordinary fast (G8OF)",
-    GPOF: "1 GPU ordinary fast (GPOF)",
-    GP2OF: "2 GPUs ordinary fast (GP2OF)",
     GP4OF: "4 GPUs ordinary fast (GP4OF)",
     GSF: "1 GPU saving fast (GSF)",
     G4SF: "4 GPUs saving fast (G4SF)",

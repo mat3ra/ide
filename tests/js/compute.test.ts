@@ -1,5 +1,6 @@
 import { InMemoryEntity } from "@mat3ra/code/dist/js/entity";
 import type { BaseInMemoryEntitySchema, ComputeArgumentsSchema } from "@mat3ra/esse/dist/js/types";
+import { QueueNameEnum } from "@mat3ra/esse/dist/js/types";
 import { expect } from "chai";
 
 import { type ComputedEntityMixin, computedEntityMixin } from "../../src/js/compute";
@@ -47,14 +48,23 @@ describe("Model", () => {
     });
 
     it("calculates approximate charge", () => {
-        assertApproximateCharge({ queue: "D", nodes: 1, ppn: 1, timeLimit: "01:00:00" }, 2);
-        assertApproximateCharge({ queue: "D", nodes: 1, ppn: 1, timeLimit: "70:00:00" }, 140);
-        assertApproximateCharge({ queue: "OR", nodes: 1, ppn: 1, timeLimit: "70:00:00" }, 70);
+        assertApproximateCharge(
+            { queue: QueueNameEnum.debug, nodes: 1, ppn: 1, timeLimit: "01:00:00" },
+            2,
+        );
+        assertApproximateCharge(
+            { queue: QueueNameEnum.debug, nodes: 1, ppn: 1, timeLimit: "70:00:00" },
+            140,
+        );
+        assertApproximateCharge(
+            { queue: QueueNameEnum.ordinaryRegular, nodes: 1, ppn: 1, timeLimit: "70:00:00" },
+            70,
+        );
     });
 
     it("applies settings.rateModifier to the approximate charge", () => {
         const app = new Computer({
-            compute: { queue: "D", nodes: 1, ppn: 1, timeLimit: "01:00:00" },
+            compute: { queue: QueueNameEnum.debug, nodes: 1, ppn: 1, timeLimit: "01:00:00" },
         });
         const charge = app.getApproximateCharge({ baseChargeRate: 1, rateModifier: 2 }, { D: 2 });
         expect(charge).to.equal(4);
@@ -69,13 +79,13 @@ describe("Model", () => {
 
     it("allows setting and reading compute back (mutable, not readonly)", () => {
         const app = new Computer({});
-        app.compute = { queue: "D", nodes: 1, ppn: 1, timeLimit: "01:00:00" };
-        expect(app.compute?.queue).to.equal("D");
+        app.compute = { queue: QueueNameEnum.debug, nodes: 1, ppn: 1, timeLimit: "01:00:00" };
+        expect(app.compute?.queue).to.equal(QueueNameEnum.debug);
     });
 
     it("types timeLimit as plain string when compute itself is required, string | undefined otherwise", () => {
         const required = new RequiredComputer({
-            compute: { queue: "D", nodes: 1, ppn: 1, timeLimit: "01:00:00" },
+            compute: { queue: QueueNameEnum.debug, nodes: 1, ppn: 1, timeLimit: "01:00:00" },
         });
         // Required case: assigning to plain `string` must compile cleanly - no @ts-expect-error.
         const requiredTimeLimit: string = required.timeLimit;

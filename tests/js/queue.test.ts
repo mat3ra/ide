@@ -1,4 +1,5 @@
 import type { QueueSchema } from "@mat3ra/esse/dist/js/types";
+import { QueueNameEnum } from "@mat3ra/esse/dist/js/types";
 import { expect } from "chai";
 
 import Queue, { type QueueSettings } from "../../src/js/nodes/queue";
@@ -7,7 +8,7 @@ function makeQueue(config: Partial<QueueSchema> = {}, queueSettings?: QueueSetti
     return new Queue(
         "cluster-001",
         {
-            name: "OR",
+            name: QueueNameEnum.ordinaryRegular,
             maxPPN: 16,
             maxNodes: 10,
             availableNodes: 10,
@@ -28,7 +29,7 @@ describe("Queue", () => {
 
     it("exposes the hostname it was constructed with", () => {
         const queue = new Queue("cluster-002", {
-            name: "OR",
+            name: QueueNameEnum.ordinaryRegular,
             maxPPN: 16,
             maxNodes: 10,
             availableNodes: 10,
@@ -48,7 +49,7 @@ describe("Queue", () => {
     });
 
     it("falls back to the schema's own name for displayName when nothing else provides one", () => {
-        const queue = makeQueue({ name: "OR" });
+        const queue = makeQueue({ name: QueueNameEnum.ordinaryRegular });
         expect(queue.displayName).to.equal("ordinary regular (OR)");
     });
 

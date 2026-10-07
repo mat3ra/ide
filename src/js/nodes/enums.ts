@@ -1,33 +1,13 @@
-export const QUEUE_TYPES = {
-    debug: "D",
-    ordinaryRegular: "OR",
-    ordinaryRegular4: "OR4",
-    ordinaryRegular8: "OR8",
-    ordinaryRegular16: "OR16",
-    savingRegular: "SR",
-    savingRegular4: "SR4",
-    savingRegular8: "SR8",
-    savingRegular16: "SR16",
-    ordinaryFast: "OF",
-    ordinaryFastPlus: "OFplus",
-    savingFast: "SF",
-    savingFastPlus: "SFplus",
-    gpuOrdinaryFast: "GOF",
-    gpu4OrdinaryFast: "G4OF",
-    gpu8OrdinaryFast: "G8OF",
-    gpuP4OrdinaryFast: "GP4OF",
-    gpuSavingFast: "GSF",
-    gpu4SavingFast: "G4SF",
-    gpu8SavingFast: "G8SF",
-    gpuPSavingFast: "GPSF",
-    gpuP2SavingFast: "GP2SF",
-    gpuP4SavingFast: "GP4SF",
-} as const;
+import type { QueueNameEnum } from "@mat3ra/esse/dist/js/types";
 
-// Note: has more keys than esse's `job/compute.json#properties/queue` union (GP4OF/GPSF/GP2SF/
-// GP4SF are not in the schema), so this stays a plain string index rather than typed against
-// that union.
-export const QUEUE_DISPLAY: Record<string, string> = {
+/**
+ * The queue names live in esse (`compute/queue-name-enum`); re-exported under ide's existing name.
+ */
+export { QueueNameEnum as QUEUE_TYPES } from "@mat3ra/esse/dist/js/types";
+
+// Keyed by `QueueNameEnum` (esse `compute/queue-name-enum`) so adding a queue there fails to
+// compile until it gets a label here.
+const QUEUE_DISPLAY_BY_NAME: Record<QueueNameEnum, string> = {
     D: "debug (D)",
     OR: "ordinary regular (OR)",
     OR4: "4 cores ordinary regular (OR4)",
@@ -38,10 +18,8 @@ export const QUEUE_DISPLAY: Record<string, string> = {
     SR8: "8 cores saving regular (SR8)",
     SR16: "16 cores saving regular (SR16)",
     OF: "ordinary fast (OF)",
-    "OF+": "ordinary fast plus (OF+)",
     OFplus: "ordinary fast plus (OFplus)",
     SF: "saving fast (SF)",
-    "SF+": "saving fast plus (SF+)",
     SFplus: "saving fast plus (SFplus)",
     GOF: "1 GPU ordinary fast (GOF)",
     G4OF: "4 GPUs ordinary fast (G4OF)",
@@ -53,6 +31,18 @@ export const QUEUE_DISPLAY: Record<string, string> = {
     GPSF: "1 GPU saving fast (GPSF)",
     GP2SF: "2 GPUs saving fast (GP2SF)",
     GP4SF: "4 GPUs saving fast (GP4SF)",
+};
+
+/** Pre-2020 spellings of `OFplus`/`SFplus` (renamed 2020-10); legacy job documents may still store them. */
+const LEGACY_QUEUE_DISPLAY: Record<string, string> = {
+    "OF+": "ordinary fast plus (OF+)",
+    "SF+": "saving fast plus (SF+)",
+};
+
+// Plain string index: the backend may report queue names that are not (yet) in `QueueNameEnum`.
+export const QUEUE_DISPLAY: Record<string, string> = {
+    ...QUEUE_DISPLAY_BY_NAME,
+    ...LEGACY_QUEUE_DISPLAY,
 };
 
 export const ETA = {

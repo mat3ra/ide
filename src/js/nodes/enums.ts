@@ -1,32 +1,13 @@
-export const QUEUE_TYPES = {
-    debug: "D",
-    ordinaryRegular: "OR",
-    ordinaryRegular4: "OR4",
-    ordinaryRegular8: "OR8",
-    ordinaryRegular16: "OR16",
-    savingRegular: "SR",
-    savingRegular4: "SR4",
-    savingRegular8: "SR8",
-    savingRegular16: "SR16",
-    ordinaryFast: "OF",
-    ordinaryFastPlus: "OFplus",
-    savingFast: "SF",
-    savingFastPlus: "SFplus",
-    gpuOrdinaryFast: "GOF",
-    gpu4OrdinaryFast: "G4OF",
-    gpu8OrdinaryFast: "G8OF",
-    gpuPOrdinaryFast: "GPOF",
-    gpuP2OrdinaryFast: "GP2OF",
-    gpuP4OrdinaryFast: "GP4OF",
-    gpuSavingFast: "GSF",
-    gpu4SavingFast: "G4SF",
-    gpu8SavingFast: "G8SF",
-    gpuPSavingFast: "GPSF",
-    gpuP2SavingFast: "GP2SF",
-    gpuP4SavingFast: "GP4SF",
-};
+import type { QueueNameEnum } from "@mat3ra/esse/dist/js/types";
 
-export const QUEUE_DISPLAY = {
+/**
+ * The queue names live in esse (`compute/queue-name-enum`); re-exported under ide's existing name.
+ */
+export { QueueNameEnum as QUEUE_TYPES } from "@mat3ra/esse/dist/js/types";
+
+// Keyed by `QueueNameEnum` (esse `compute/queue-name-enum`) so adding a queue there fails to
+// compile until it gets a label here.
+const QUEUE_DISPLAY_BY_NAME: Record<QueueNameEnum, string> = {
     D: "debug (D)",
     OR: "ordinary regular (OR)",
     OR4: "4 cores ordinary regular (OR4)",
@@ -37,16 +18,12 @@ export const QUEUE_DISPLAY = {
     SR8: "8 cores saving regular (SR8)",
     SR16: "16 cores saving regular (SR16)",
     OF: "ordinary fast (OF)",
-    "OF+": "ordinary fast plus (OF+)",
     OFplus: "ordinary fast plus (OFplus)",
     SF: "saving fast (SF)",
-    "SF+": "saving fast plus (SF+)",
     SFplus: "saving fast plus (SFplus)",
     GOF: "1 GPU ordinary fast (GOF)",
     G4OF: "4 GPUs ordinary fast (G4OF)",
     G8OF: "8 GPUs ordinary fast (G8OF)",
-    GPOF: "1 GPU ordinary fast (GPOF)",
-    GP2OF: "2 GPUs ordinary fast (GP2OF)",
     GP4OF: "4 GPUs ordinary fast (GP4OF)",
     GSF: "1 GPU saving fast (GSF)",
     G4SF: "4 GPUs saving fast (G4SF)",
@@ -55,6 +32,19 @@ export const QUEUE_DISPLAY = {
     GP2SF: "2 GPUs saving fast (GP2SF)",
     GP4SF: "4 GPUs saving fast (GP4SF)",
 };
+
+/** Pre-2020 spellings of `OFplus`/`SFplus` (renamed 2020-10); legacy job documents may still store them. */
+const LEGACY_QUEUE_DISPLAY: Record<string, string> = {
+    "OF+": "ordinary fast plus (OF+)",
+    "SF+": "saving fast plus (SF+)",
+};
+
+// Plain string index: the backend may report queue names that are not (yet) in `QueueNameEnum`.
+export const QUEUE_DISPLAY: Record<string, string> = {
+    ...QUEUE_DISPLAY_BY_NAME,
+    ...LEGACY_QUEUE_DISPLAY,
+};
+
 export const ETA = {
     withinOneMin: {
         display: "within 1 min",
@@ -76,13 +66,14 @@ export const ETA = {
         display: "more than 1 hour",
         order: 50,
     },
-};
+} as const;
+
 export const TIME_LIMIT_TYPES = {
     single: "per single attempt",
     compound: "compound",
-};
+} as const;
 
 export const IS_RESTARTABLE = {
     yes: true,
     no: false,
-};
+} as const;

@@ -34,7 +34,7 @@
     },
     "devDependencies": {
         "@mat3ra/code": "2026.8.18-0",
-        "@mat3ra/esse": "https://github.com/mat3ra/esse/releases/download/wip-eed5826/esse.tgz",
+        "@mat3ra/esse": "2026.10.8-0",
         "@mat3ra/tsconfig": "^2024.6.3-0",
         "@exabyte-io/eslint-config": "^2022.11.17-0",
         "@types/mocha": "^10.0.10",

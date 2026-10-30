@@ -15,6 +15,7 @@ describe("time", () => {
     });
     it("wallTimeToHours", () => {
         expect(wallTimeToHours("00:30:00")).to.be.equal(0.5);
+        expect(wallTimeToHours("2:00:00")).to.be.equal(2);
         expect(wallTimeToHours("02:999:00:00")).to.be.equal(48 + 999);
         expect(wallTimeToHours("01:00:00:00")).to.be.equal(24);
     });

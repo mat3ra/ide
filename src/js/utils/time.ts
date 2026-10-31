@@ -21,7 +21,7 @@ export function wallTimeTo(walltime: string, units: WallTimeUnit): number {
     }
 
     const parts = walltime.split(":").reverse();
-    const regex = /^([0-9][0-9])?:?([0-9]?[0-9][0-9]):([0-5][0-9]):([0-5][0-9])$/;
+    const regex = /^([0-9][0-9])?:?([0-9]{1,3}):([0-5][0-9]):([0-5][0-9])$/;
 
     if (parts.length < 3 || !walltime.match(regex)) {
         throw new Error(

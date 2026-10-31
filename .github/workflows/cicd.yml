@@ -8,10 +8,10 @@ concurrency:
 
 jobs:
   run-py-linter:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [ 3.10.13 ]
+        python-version: [ 3.10.x ]
 
     steps:
       - name: Checkout this repository
@@ -33,7 +33,7 @@ jobs:
 
   run-py-tests:
     needs: run-py-linter
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version:
@@ -146,7 +146,7 @@ jobs:
       - name: Publish python release
         uses: ./actions/py/publish
         with:
-          python-version: 3.10.13
+          python-version: 3.10.x
           github-token: ${{ secrets.BOT_GITHUB_TOKEN }}
           pypi-api-token: ${{ secrets.PYPI_API_TOKEN }}
           publish-tag: 'false'

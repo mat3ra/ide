@@ -63,7 +63,7 @@ jobs:
           bot-ssh-key: ${{ secrets.BOT_GITHUB_KEY }}
 
   run-js-tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         node-version:
@@ -98,7 +98,7 @@ jobs:
       - run-js-tests
       - run-py-tests
       - run-py-linter
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: (github.repository != 'Exabyte-io/template-definitions') && (github.ref_name == 'main')
 
     steps:
@@ -127,7 +127,7 @@ jobs:
       - run-py-linter
       # Wait for JS publish step to publish the new tag
       - publish-js-package
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: (github.repository != 'Exabyte-io/template-definitions') && (github.ref_name == 'main')
 
     steps:

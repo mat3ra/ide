@@ -5,7 +5,7 @@ from typing import Optional
 from mat3ra.code.entity import InMemoryEntitySnakeCase
 from mat3ra.esse.models.compute.nodes.cluster import ClusterNodeSchema
 from mat3ra.esse.models.job.compute import ComputeArgumentsSchema, Cluster as ComputeClusterSchema
-from mat3ra.esse.models.job.queue import Name as QueueName, QueueSchema
+from mat3ra.esse.models.compute.queue import Name as QueueName, QueueSchema
 from pydantic import field_serializer, model_validator
 
 

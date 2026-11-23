@@ -1,3 +1,5 @@
+import json
+import os
 import warnings
 from typing import List
 from typing import Optional
@@ -59,3 +61,8 @@ class Compute(ComputeArgumentsSchema, InMemoryEntitySnakeCase):
             warnings.warn(msg)
             self.nodes = queue.max_nodes
         return self
+
+
+def get_cluster_name(name: str = "cluster-001") -> str:
+    clusters = json.loads(os.environ.get("CLUSTERS", "[]") or "[]")
+    return clusters[0] if clusters else name

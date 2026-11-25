@@ -20,8 +20,8 @@ classifiers = [
     "Topic :: Software Development",
 ]
 dependencies = [
-    "mat3ra-code @ git+https://github.com/mat3ra/code@21b20a7109f0467c027947a4a8d5ae5ceb8c4cf2",
-    "mat3ra-esse  @ git+https://github.com/mat3ra/esse@d45a08e16892faf2b345104e4bcdc070919f0461",
+    "mat3ra-code",
+    "mat3ra-esse",
     "numpy",
 ]
 

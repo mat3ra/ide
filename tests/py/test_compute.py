@@ -4,15 +4,15 @@ from mat3ra.ide import Cluster, Compute, Queue, QueueName
 
 HOSTNAME = "master-1-staging.mat3ra.com"
 
-QUEUE_D = Queue(name=QueueName.D, maxPpn=16, maxNodes=10, availableNodes=8, currentNodes=2)
-QUEUE_OR = Queue(name=QueueName.OR, maxPpn=8, maxNodes=5, availableNodes=3, currentNodes=1)
+QUEUE_D = Queue(name=QueueName.D, maxPPN=16, maxNodes=10, availableNodes=8, currentNodes=2)
+QUEUE_OR = Queue(name=QueueName.OR, maxPPN=8, maxNodes=5, availableNodes=3, currentNodes=1)
 
 CLUSTER_WITH_QUEUES = Cluster(hostname=HOSTNAME, queues=[QUEUE_D, QUEUE_OR])
 CLUSTER_NO_QUEUES = Cluster(hostname=HOSTNAME, queues=[])
 
 def test_queue_fields():
     assert QUEUE_D.name == QueueName.D
-    assert QUEUE_D.maxPpn == 16
+    assert QUEUE_D.maxPPN == 16
     assert QUEUE_D.maxNodes == 10
     assert QUEUE_D.availableNodes == 8
     assert QUEUE_D.currentNodes == 2
